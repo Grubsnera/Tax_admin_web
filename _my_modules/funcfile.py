@@ -64,7 +64,7 @@ def get_field_value(o_cursor, s_table='', s_field='', s_where=''):
 
 
 def writelog(s_entry="\n",
-             s_path="S:/Logs/",
+             s_path="O:/Pythondev/Tax_admin_web/Logs/",
              s_file="Python_log_" + datetime.datetime.now().strftime("%Y%m%d") + ".txt",
              s_mode='a'):
     """
@@ -79,7 +79,7 @@ def writelog(s_entry="\n",
 
     # DECLARE VARIABLES
     if s_path == "":
-        s_path = "S:/Logs/"
+        s_path = "O:/Pythondev/Tax_admin_web/Logs/"
 
     if s_file == "":
         s_file = "Python_log_" + datetime.datetime.now().strftime("%Y%m%d") + ".txt"
