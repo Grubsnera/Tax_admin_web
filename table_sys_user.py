@@ -11,13 +11,13 @@ from _my_modules import funcmysql
 from _my_modules import funcfile
 
 """  Index - list of tables created
-ASSIGNMENT_CONDUCTED (Table to store assignment conducted by)
+SYS_USERS (Table to store and replicate system users.)
 """
 
 
-def assi_conducted(s_database: str = "", s_drop_table: str = "", s_add_data: str = ""):
+def sys_users(s_database: str = "", s_drop_table: str = "", s_add_data: str = ""):
     """
-    Script to build ASSIGNMENT CONDUCTED table with contents
+    Script to build SYSTEM USERS table with contents
     :param s_database: Database in which to create the table
     :param s_drop_table: Should table be dropped? (y/n)
     :param s_add_data: Should default data be added? (y/n)
@@ -26,13 +26,14 @@ def assi_conducted(s_database: str = "", s_drop_table: str = "", s_add_data: str
 
     # Declare variables
     l_debug: bool = False
-    sd_database: str = "Web_ia_nwu"
+    sd_database: str = "Web_tax_admin"
     sd_drop_table: str = "n"
     sd_add_data: str = "n"
+    s_table: str = "sys_users"
 
     if l_debug:
-        print("WEB_IA_NWU INPUTS")
-        print("-----------------")
+        print("WEB TABLE INPUTS")
+        print("----------------")
 
     # Input the ia DATABASE name
     if l_debug or s_database == "":
@@ -63,73 +64,85 @@ def assi_conducted(s_database: str = "", s_drop_table: str = "", s_add_data: str
 
     # Script log file
     funcfile.writelog("Now")
-    funcfile.writelog("SCRIPT: WEB_IA_NWU")
-    funcfile.writelog("------------------")
+    funcfile.writelog("SCRIPT: WEB_SYSTEM_USERS")
+    funcfile.writelog("------------------------")
 
     # Connect to the oracle database
     cnxn = funcmysql.mysql_open(s_database)
     curs = cnxn.cursor()
     funcfile.writelog("%t OPEN DATABASE: " + s_database)
 
-    # Create ASSIGNMENT_CONDUCTED table *******************************************
+    # Create SYS_USERS table ***************************************************
     if s_drop_table == "y":
-        curs.execute("DROP TABLE IF EXISTS ia_assignment_conducted")
-        funcfile.writelog("%t DROPPED TABLE: ASSIGNMENT_CONDUCTED(ia_assignment_conducted)")
+        curs.execute("DROP TABLE IF EXISTS " + s_table)
+        funcfile.writelog("%t DROPPED TABLE: SYS_USERS(" + s_table + ")")
     s_sql: str = """
-    CREATE TABLE IF NOT EXISTS ia_assignment_conducted (
-    ia_assicond_auto INT(11) NOT NULL AUTO_INCREMENT,
-    ia_assicond_name VARCHAR(50) NOT NULL,
-    ia_assicond_desc TEXT NOT NULL,
-    ia_assicond_active TEXT NOT NULL,
-    ia_assicond_from DATETIME NOT NULL,
-    ia_assicond_to DATETIME NOT NULL,
-    ia_assicond_createdate DATETIME,
-    ia_assicond_createby VARCHAR(50),
-    ia_assicond_editdate DATETIME,
-    ia_assicond_editby VARCHAR(50),
-    PRIMARY KEY (ia_assicond_auto),
-    INDEX fb_order_ia_assicond_name_INDEX (ia_assicond_name),
-    INDEX fb_order_ia_assicond_from_INDEX (ia_assicond_from)
+    CREATE TABLE IF NOT EXISTS `%TABLE%` (
+    `id` int(11) NOT NULL,
+    `user_id` int(11) NOT NULL,
+    `name` varchar(400) NOT NULL,
+    `username` varchar(150) NOT NULL,
+    `password` varchar(100) NOT NULL,
+    `email` varchar(100) NOT NULL,
+    `block` tinyint(4) NOT NULL DEFAULT 0,
+    `reset` tinyint(4) NOT NULL DEFAULT 0,
+    `user_group` int(10) UNSIGNED NOT NULL,
+    `created` datetime,
+    `created_by` int(11),
+    `created_by_alias` varchar(100),
+    `modified` datetime,
+    `modified_by` int(11),
+    `modified_by_alias` varchar(100),
+    PRIMARY KEY (`id`),
+    INDEX `fb_groupby_user_group_INDEX` (`user_group`)    
     )
     ENGINE = InnoDB
     CHARSET=utf8mb4
     COLLATE utf8mb4_unicode_ci
-    COMMENT = 'Table to store assignment conducted by lists.'
+    COMMENT = 'Table to store and replicate system users.'
     """ + ";"
+    s_sql = s_sql.replace("%TABLE%", s_table)
     curs.execute(s_sql)
-    funcfile.writelog("%t CREATED TABLE: ASSIGNMENT_CONDUCTED(ia_assignment_conducted)")
+    funcfile.writelog("%t CREATED TABLE: SYS_USERS(" + s_table + ")")
 
-    # Insert ASSIGNMENT_CONDUCTED data
+    # Insert SYS_USERS data
     if s_add_data == "y":
         s_sql = """
-        INSERT INTO `ia_assignment_conducted`
-        (`ia_assicond_name`,
-        `ia_assicond_desc`,
-        `ia_assicond_active`,
-        `ia_assicond_from`,
-        `ia_assicond_to`,
-        `ia_assicond_createdate`,
-        `ia_assicond_createby`)
+        INSERT INTO `%TABLE%` (
+        `id`,
+        `user_id`,
+        `name`,
+        `username`,
+        `password`,
+        `email`,
+        `block`,
+        `reset`,
+        `user_group`,
+        `created`,
+        `created_by_alias`
+        )
         VALUES
-        ('NWU Internal Audit', 'NWU Internal Audit conducted the audit assignment.', '1', NOW(), '2099-12-31 00:00:00', NOW(), 'Python')
+        (928, 928, 'WebMaster', 'webmaster', '', 'webmaster@tax-admin.co.za', 0, 0, 8, NOW(), 'Python'),
+        (914, 914, 'Albert van Rensburg', 'albertjvr', '', 'albertjvr@outlook.com', 0, 0, 8, NOW(), 'Python')
         """ + ";"
+        s_sql = s_sql.replace("%TABLE%", s_table)
         curs.execute(s_sql)
         cnxn.commit()
-        funcfile.writelog("%t INSERTED DATA: ASSIGNMENT_CONDUCTED(ia_assignment_conducted)")
+        funcfile.writelog("%t INSERTED DATA: SYS_USERS(" + s_table + ")")
 
     # ******************************************************************************
 
     # Script log file
-    funcfile.writelog("---------------------")
-    funcfile.writelog("COMPLETED: WEB_IA_NWU")
+    funcfile.writelog("---------------------------")
+    funcfile.writelog("COMPLETED: WEB_SYSTEM_USERS")
 
     return
 
 
 if __name__ == '__main__':
     try:
-        assi_conducted()
+        sys_users()
         # Test automated function - delete and create new table with data
-        # assi_conducted("Web_ia_nwu", "y", "y")
+        # sys_users("Web_tax_admin", "y", "y")
     finally:
         print("")
