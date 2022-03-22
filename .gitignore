@@ -242,4 +242,5 @@ _my_modules/funcsms.py
 docs_private/
 history/
 logs/
+sql/
 testing/
