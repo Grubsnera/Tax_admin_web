@@ -10,13 +10,14 @@ Copyright (c) Albert Janse van Rensburg, 18 Mar 2022
 # Define Functions
 from _my_modules import funcfile
 from _my_modules import funcmysql
+import table_sys_user
 
 """ Notes NB!
 This script can delete tables, and overwrite them. Be careful!
 """
 
 """ Index
-mysql_create_assi_conducted
+See declare variables
 """
 
 # Declare variables
@@ -24,9 +25,9 @@ l_debug: bool = True
 sd_database = "Web_tax_admin"
 sd_drop_table = "n"
 sd_add_data = "n"
-run_mysql_create_assi_conducted: bool = False
-run_mysql_create_find_adequacy: bool = False
 s_sql = ""  # SQL statements
+
+run_sys_user: bool = False
 
 if l_debug:
     print("WEB MYSQL INPUTS")
@@ -65,13 +66,19 @@ funcfile.writelog("%t OPEN DATABASE: " + s_database)
 
 # Create the data files
 
-"""
-if run_mysql_create_assi_conducted:
+if run_sys_user:
+    """
+    NOTE
+    The system user table are populated automatically on first add.
+    Therefor the s_add_data default to NO even if switch is on above.
+    """
     if l_debug:
-        print("Working on the assignment conducted table...")
-    mysql_create_assi_conducted.assi_conducted(s_database, s_drop_table, s_add_data)
-"""
+        print("Working on the sys_user table...")
+    table_sys_user.sys_users(s_database, s_drop_table, "n")
 
+# Close the database
+cnxn.close()
+funcfile.writelog("%t CLOSE DATABASE: " + s_database)
 
 # ******************************************************************************
 
