@@ -12,6 +12,7 @@ from _my_modules import funcfile
 from _my_modules import funcmysql
 import table_sys_user
 import table_sys_country
+import table_sys_town
 
 """ Notes NB!
 This script can delete tables, and overwrite them. Be careful!
@@ -29,7 +30,8 @@ sd_add_data = "n"
 s_sql = ""  # SQL statements
 
 run_sys_user: bool = False
-run_sys_country: bool = True
+run_sys_town: bool = False
+run_sys_country: bool = False
 
 if l_debug:
     print("WEB MYSQL INPUTS")
@@ -77,6 +79,11 @@ if run_sys_user:
     if l_debug:
         print("Working on the sys_user table...")
     table_sys_user.sys_users(s_database, s_drop_table, "n")
+
+if run_sys_town:
+    if l_debug:
+        print("Working on the sys_towns table...")
+    table_sys_town.sys_towns(s_database, s_drop_table, s_add_data)
 
 if run_sys_country:
     if l_debug:
