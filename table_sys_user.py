@@ -87,6 +87,7 @@ def sys_users(s_database: str = "", s_drop_table: str = "", s_add_data: str = ""
     `block` tinyint(4) NOT NULL DEFAULT 0,
     `reset` tinyint(4) NOT NULL DEFAULT 0,
     `user_group` int(10) UNSIGNED NOT NULL,
+    `contact_id` int(11) NOT NULL,
     `created` datetime,
     `created_by` int(11),
     `created_by_alias` varchar(100),
