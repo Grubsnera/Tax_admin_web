@@ -24,14 +24,14 @@ See declare variables
 
 # Declare variables
 l_debug: bool = True
-sd_database = "Web_tax_admin"
+sd_database = "Web_tax_joomla"
 sd_drop_table = "n"
 sd_add_data = "n"
 s_sql = ""  # SQL statements
 
-run_sys_user: bool = False
-run_sys_town: bool = False
 run_sys_country: bool = False
+run_sys_town: bool = False
+run_sys_user: bool = False
 
 if l_debug:
     print("WEB MYSQL INPUTS")
@@ -70,6 +70,16 @@ funcfile.writelog("%t OPEN DATABASE: " + s_database)
 
 # Create the data files
 
+if run_sys_country:
+    if l_debug:
+        print("Working on the sys_countries table...")
+    table_sys_country.sys_countries(s_database, s_drop_table, s_add_data, "4", "5")
+
+if run_sys_town:
+    if l_debug:
+        print("Working on the sys_towns table...")
+    table_sys_town.sys_towns(s_database, s_drop_table, s_add_data, "7", "8")
+
 if run_sys_user:
     """
     NOTE
@@ -80,15 +90,6 @@ if run_sys_user:
         print("Working on the sys_user table...")
     table_sys_user.sys_users(s_database, s_drop_table, "n")
 
-if run_sys_town:
-    if l_debug:
-        print("Working on the sys_towns table...")
-    table_sys_town.sys_towns(s_database, s_drop_table, s_add_data)
-
-if run_sys_country:
-    if l_debug:
-        print("Working on the sys_countries table...")
-    table_sys_country.sys_countries(s_database, s_drop_table, s_add_data)
 
 # Close the database
 cnxn.close()
