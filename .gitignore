@@ -230,6 +230,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Albert
+/.config.ini
 /README.md
 /*.csv
 _external_data/
