@@ -5,18 +5,77 @@ Create: 24 Jan 2018
 """
 
 # IMPORT SYSTEM OBJECTS
+import os
+import logging
 import datetime
 
 # IMPORT OWN MODULES
 from _my_modules import funcconf
 from _my_modules import funcsys
 
-# INDEX
+# FUNCTIONS INDEX
 """
-Function to obtain a field value from any table
-Function to create log file (writelog)
-Function to delete a file (file_delete)
+writelog - Function to create log file.
+file_delete - Function to delete a file. 
+get_field_value - Function to obtain a field value from any table.
 """
+
+
+def writelog(s_entry: str = '\n',
+             s_path: str = 'S:/Logs/',
+             s_file: str = f'Python_log_{datetime.datetime.now().strftime("%Y%m%d")}.txt',
+             s_mode: str = 'a'):
+    """
+    Function to create log file
+
+    :param s_entry: Log file entry
+    :param s_path: Log file path
+    :param s_file: Log file name
+    :param s_mode: File mode
+    :return: Nothing
+    """
+
+    # Declare variables
+    s_project: str = f'FUNCFILE: {s_file}'
+
+    try:
+        with open(os.path.join(s_path, s_file), s_mode, newline='', encoding="utf-8") as fl:
+            # File opened for writing. Write the log
+            if s_entry == "Now":
+                fl.write("----------------\n")
+                s_entry = datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "\n"
+            elif "%t" in s_entry:
+                s_entry = s_entry.replace("%t", datetime.datetime.now().strftime("%H:%M:%S")) + "\n"
+            else:
+                s_entry += "\n"
+            fl.write(s_entry)
+            return True
+    except IOError as err:
+        logging.error(f"NWUIACA:Fail:{s_project} - {err}")
+        return False
+
+
+def file_delete(s_path: str = "", s_file: str = "", debug: bool = False):
+    """
+    Function to delete a file.
+
+    :param s_path: Log file path
+    :param s_file: Log file name
+    :param debug: Whether to print debug information
+    :return: bool: True - deleted or False
+    """
+
+    # Declare variables
+    file_path = os.path.join(s_path, s_file)
+
+    if debug:
+        print('File to delete: ' + file_path)
+
+    try:
+        os.remove(file_path)
+        return True
+    except FileNotFoundError:
+        return False
 
 
 def get_field_value(o_cursor, s_table='', s_field='', s_where=''):
@@ -39,6 +98,7 @@ def get_field_value(o_cursor, s_table='', s_field='', s_where=''):
     # SET PREVIOUS FINDINGS
     if l_debug:
         print("Field value lookup...")
+
     s_sql = """
         Select
             t.%FIELD%
@@ -50,10 +110,15 @@ def get_field_value(o_cursor, s_table='', s_field='', s_where=''):
     s_sql = s_sql.replace("%TABLE%", s_table)
     s_sql = s_sql.replace("%FIELD%", s_field)
     s_sql = s_sql.replace("%WHERE%", s_where)
+
     if l_debug:
         print(s_sql)
+
     t_return = o_cursor.execute(s_sql).fetchone()
-    print(t_return)
+
+    if l_debug:
+        print(t_return)
+
     if t_return is not None:
         s_return = str(t_return[0])
     else:
@@ -63,13 +128,12 @@ def get_field_value(o_cursor, s_table='', s_field='', s_where=''):
     return s_return
 
 
-def writelog(s_entry="\n",
-             s_path="O:/Pythondev/Tax_admin_web/Logs/",
-             s_file="Python_log_" + datetime.datetime.now().strftime("%Y%m%d") + ".txt",
-             s_mode='a'):
+def writelog_old(s_entry: str = '\n',
+                 s_path: str = 'S:/Logs/',
+                 s_file: str = 'Python_log_' + datetime.datetime.now().strftime('%Y%m%d') + '.txt',
+                 s_mode: str = 'a'):
     """
     Function to create log file
-
     :param s_entry: Log file entry
     :param s_path: Log file path
     :param s_file: Log file name
@@ -78,16 +142,11 @@ def writelog(s_entry="\n",
     """
 
     # DECLARE VARIABLES
-    if s_path == "":
-        s_path = "O:/Pythondev/Tax_admin_web/Logs/"
-
-    if s_file == "":
-        s_file = "Python_log_" + datetime.datetime.now().strftime("%Y%m%d") + ".txt"
-    s_project: str = "FUNCFILE:" + s_file
+    s_project: str = 'FUNCFILE: ' + s_file
 
     try:
 
-        with open(s_path + s_file, s_mode, encoding="utf-8") as fl:
+        with open(s_path + s_file, s_mode, newline='', encoding="utf-8") as fl:
             # file opened for writing. write to it here
             # Write the log
             if s_entry == "Now":
@@ -113,7 +172,7 @@ def writelog(s_entry="\n",
     return l_success
 
 
-def file_delete(s_path: str = "", s_file: str = ""):
+def file_delete_old(s_path: str = "", s_file: str = ""):
     """
     Function to delete a file.
 
@@ -122,9 +181,12 @@ def file_delete(s_path: str = "", s_file: str = ""):
     :return: bool: True - deleted or False
     """
 
-    import os
-
+    # DECLARE VARIABLES
+    l_debug: bool = False
     l_return: bool = False
+
+    if l_debug:
+        print('File to delete: ' + s_path + s_file)
 
     if os.path.exists(s_path + s_file):
         os.remove(s_path + s_file)
