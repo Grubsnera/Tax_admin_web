@@ -114,16 +114,16 @@ dmypy.json
 .pyre/
 
 # Albert
-.idea/
+.idea
 _external_data/
 _my_modules/funcmysql.py
 _my_modules/funcsms.py
 documents/
 history/
 logs/
+*.csv
 *.fsqlayout
 *.history
 sql_old/
 testing/
 /.config.ini
-/*.csv
