@@ -114,7 +114,8 @@ dmypy.json
 .pyre/
 
 # Albert
-.idea
+.idea/
+.idea/inspectionProfiles/
 _external_data/
 _my_modules/funcmysql.py
 _my_modules/funcsms.py
