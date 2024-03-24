@@ -115,7 +115,6 @@ dmypy.json
 
 # Albert
 .idea/
-.idea/inspectionProfiles/
 _external_data/
 _my_modules/funcmysql.py
 _my_modules/funcsms.py
