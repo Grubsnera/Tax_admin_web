@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\_external_data\dialcode.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\_external_data\postalcodes.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

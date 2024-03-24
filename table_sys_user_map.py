@@ -1,5 +1,5 @@
 """
-Function to create the sys_user table and import default data.
+Function to create the sys_user_map table and import default data.
 19 December 2023 Albert van Rensburg
 """
 import datetime
@@ -8,7 +8,7 @@ import pyodbc
 from _my_modules import funcmariadb
 
 
-def sys_user(database: str = '', create_table: bool = False, import_data: bool = False):
+def sys_user_map(database: str = '', create_table: bool = False, import_data: bool = False):
     """
     Function to create the sys_user table and import the existing data.
     :param database:
@@ -19,7 +19,7 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
 
     # Variables
     debug: bool = True
-    table: str = 'sys_user'
+    table: str = 'sys_user_map'
     success: bool = False
 
     # Test for a database
@@ -41,17 +41,11 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
             if debug:
                 print(f'Create table {table}')
             sql = f'''CREATE TABLE {table}(
-            user_id int(11) AUTO_INCREMENT COMMENT 'User id',
+            map_id int(11) AUTO_INCREMENT COMMENT 'User mapping id',
             system_id int(11) COMMENT 'Joomla user id',
-            active_to date,
-            form_edit_id int(11),
-            created_on datetime,
-            created_by int(11),
-            created_by_alias varchar(50),
-            updated_on datetime,
-            updated_by int(11),
-            updated_by_alias varchar(50),
-            PRIMARY KEY (user_id)
+            contact_id int(11) COMMENT 'Joomla contact id',
+            customer_id int(11) COMMENT 'Joomla contact customer id',
+            PRIMARY KEY (map_id)
             )'''
             cursor.execute(sql)
 
@@ -60,16 +54,10 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
             now = datetime.datetime.now()
             sql = f'''INSERT INTO {table}(
             system_id,
-            active_to,
-            form_edit_id,
-            created_on,
-            created_by,
-            created_by_alias,
-            updated_on,
-            updated_by,
-            updated_by_alias            
+            contact_id,
+            customer_id
             ) VALUES 
-            (486, '2099-12-31', 5, '{now}', 0, 'Python', '{now}', 0, 'Python')
+            (486, 1, 0)
             ;'''
             cursor.execute(sql)
 
@@ -87,7 +75,7 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
 
 
 if __name__ == '__main__':
-    if sys_user('web_tax_admin', True, True):
+    if sys_user_map('web_tax_admin', True, True):
         print("sys_user table created successfully")
     else:
         print("sys_user was not created successfully")

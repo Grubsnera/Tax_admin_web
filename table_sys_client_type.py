@@ -1,5 +1,5 @@
 """
-Function to create the sys_user table and import default data.
+Function to create the sys_client_type table and import default data.
 19 December 2023 Albert van Rensburg
 """
 import datetime
@@ -8,9 +8,9 @@ import pyodbc
 from _my_modules import funcmariadb
 
 
-def sys_user(database: str = '', create_table: bool = False, import_data: bool = False):
+def sys_client_type(database: str = '', create_table: bool = False, import_data: bool = False):
     """
-    Function to create the sys_user table and import the existing data.
+    Function to create the sys_client table and import the existing data.
     :param database:
     :param create_table:
     :param import_data:
@@ -19,7 +19,7 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
 
     # Variables
     debug: bool = True
-    table: str = 'sys_user'
+    table: str = 'sys_client_type'
     success: bool = False
 
     # Test for a database
@@ -41,8 +41,11 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
             if debug:
                 print(f'Create table {table}')
             sql = f'''CREATE TABLE {table}(
-            user_id int(11) AUTO_INCREMENT COMMENT 'User id',
-            system_id int(11) COMMENT 'Joomla user id',
+            client_type_id int(11) AUTO_INCREMENT,
+            customer_id int(11),
+            name varchar(50),
+            description text,
+            active_from date,
             active_to date,
             form_edit_id int(11),
             created_on datetime,
@@ -51,7 +54,8 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
             updated_on datetime,
             updated_by int(11),
             updated_by_alias varchar(50),
-            PRIMARY KEY (user_id)
+            PRIMARY KEY (client_type_id),
+            UNIQUE KEY name (customer_id,name)
             )'''
             cursor.execute(sql)
 
@@ -59,7 +63,10 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
 
             now = datetime.datetime.now()
             sql = f'''INSERT INTO {table}(
-            system_id,
+            customer_id,
+            name,
+            description,
+            active_from,
             active_to,
             form_edit_id,
             created_on,
@@ -67,9 +74,12 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
             created_by_alias,
             updated_on,
             updated_by,
-            updated_by_alias            
+            updated_by_alias
             ) VALUES 
-            (486, '2099-12-31', 5, '{now}', 0, 'Python', '{now}', 0, 'Python')
+            (2, 'Individual', 'Individuals.', '2023-01-01', '2099-12-31', 6, '{now}', 0, 'Python', '{now}', 0, 'Python'),
+            (2, 'Company', 'Companies and Closed Corporations.', '2023-01-01', '2099-12-31', 6, '{now}', 0, 'Python', '{now}', 0, 'Python'),
+            (2, 'Trust', 'Trusts.', '2023-01-01', '2099-12-31', 6, '{now}', 0, 'Python', '{now}', 0, 'Python'),
+            (2, 'Other', 'Other businesses.', '2023-01-01', '2099-12-31', 6, '{now}', 0, 'Python', '{now}', 0, 'Python')
             ;'''
             cursor.execute(sql)
 
@@ -87,7 +97,7 @@ def sys_user(database: str = '', create_table: bool = False, import_data: bool =
 
 
 if __name__ == '__main__':
-    if sys_user('web_tax_admin', True, True):
-        print("sys_user table created successfully")
+    if sys_client_type('web_tax_admin', True, True):
+        print("sys_client_type table created successfully")
     else:
-        print("sys_user was not created successfully")
+        print("sys_client_type was not created successfully")
