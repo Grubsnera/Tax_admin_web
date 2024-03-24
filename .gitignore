@@ -114,84 +114,16 @@ dmypy.json
 .pyre/
 
 # Albert
-/.config.ini
-/*.csv
-_my_modules/funcbott.py
-_my_modules/funcmail.py
-_my_modules/funcmysql.py
-_my_modules/funcoracle.py
-_my_modules/funcsms.py
 .idea/
 _external_data/
-_external_data_history/
-docs/
-docs private/
+_my_modules/funcmysql.py
+_my_modules/funcsms.py
+documents/
 history/
 logs/
-logs_history/
-searchworks/
-sql queries/Admin/*.fsqlayout
-sql queries/Kfs/*.fsqlayout
-sql queries/Kfs_curr/*.fsqlayout
-sql queries/Kfs_test_creditor/*.fsqlayout
-sql queries/Kfs_test_gl_transaction/*.fsqlayout
-sql queries/Kfs_tran/*.fsqlayout
-sql queries/Kfs_vss_studdeb/*.fsqlayout
-sql queries/Oracle_hr/*.fsqlayout
-sql queries/Oracle_vss/*.fsqlayout
-sql queries/People/*.fsqlayout
-sql queries/People_conflict/*.fsqlayout
-sql queries/People_leave/*.fsqlayout
-sql queries/People_list/*.fsqlayout
-sql queries/People_payroll/*.fsqlayout
-sql queries/People_test_masterfile/*.fsqlayout
-sql queries/Rensburg/*.fsqlayout
-sql queries/Server_ia/*.fsqlayout
-sql queries/Special_investigation/*.fsqlayout
-sql queries/Surtech_project_01/*.fsqlayout
-sql queries/Vss/*.fsqlayout
-sql queries/Vss_curr/*.fsqlayout
-sql queries/Vss_deferment/*.fsqlayout
-sql queries/Vss_fee/*.fsqlayout
-sql queries/Vss_fee_test_bursary/*.fsqlayout
-sql queries/Vss_marks/*.fsqlayout
-sql queries/Vss_residence/*.fsqlayout
-sql queries/Web_ia_joomla/*.fsqlayout
-sql queries/Web_ia_nwu/*.fsqlayout
-sql queries/Web_ia_nwu_sqlite/*.fsqlayout
-sql queries/Web_nwuia (local)/*.fsqlayout
-sql queries/Web_nwuia (server)/*.fsqlayout
-sql queries yolandie/Sqlite_people_conflict/*.fsqlayout
-sql queries/Admin/*.history
-sql queries/Kfs/*.history
-sql queries/Kfs_curr/*.history
-sql queries/Kfs_test_creditor/*.history
-sql queries/Kfs_test_gl_transaction/*.history
-sql queries/Kfs_tran/*.history
-sql queries/Kfs_vss_studdeb/*.history
-sql queries/Oracle_hr/*.history
-sql queries/Oracle_vss/*.history
-sql queries/People/*.history
-sql queries/People_conflict/*.history
-sql queries/People_leave/*.history
-sql queries/People_list/*.history
-sql queries/People_payroll/*.history
-sql queries/People_test_masterfile/*.history
-sql queries/Rensburg/*.history
-sql queries/Server_ia/*.history
-sql queries/Special_investigation/*.history
-sql queries/Surtech_project_01/*.history
-sql queries/Vss/*.history
-sql queries/Vss_curr/*.history
-sql queries/Vss_deferment/*.history
-sql queries/Vss_fee/*.history
-sql queries/Vss_fee_test_bursary/*.history
-sql queries/Vss_marks/*.history
-sql queries/Vss_residence/*.history
-sql queries/Web_ia_joomla/*.history
-sql queries/Web_ia_nwu/*.history
-sql queries/Web_ia_nwu_sqlite/*.history
-sql queries/Web_nwuia (local)/*.history
-sql queries/Web_nwuia (server)/*.history
-sql queries yolandie/Sqlite_people_conflict/*.history
+*.fsqlayout
+*.history
+sql_old/
 testing/
+/.config.ini
+/*.csv
