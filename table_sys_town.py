@@ -58,7 +58,8 @@ def sys_town(database: str = '', create_table: bool = False, import_data: bool =
                 updated_by int(11),
                 updated_by_alias varchar(50),
                 PRIMARY KEY (town_id),
-                UNIQUE (`town_name`(50), `town_suburb`(50))
+                UNIQUE (`town_name`(50), `town_suburb`(50)),
+                FOREIGN KEY (country_iso2) REFERENCES sys_country(country_iso2) ON DELETE RESTRICT ON UPDATE CASCADE
             )'''
             cursor.execute(sql)
 
