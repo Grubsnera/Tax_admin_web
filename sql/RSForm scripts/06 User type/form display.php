@@ -1,7 +1,6 @@
 <?php
 
 // Display different heading and button depending on the action
-
 $action = JFactory::getApplication()->input->getString('action');
 $description = 'user type';
 
