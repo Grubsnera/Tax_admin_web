@@ -49,7 +49,7 @@ def sys_country(database: str = '', create_table: bool = False, import_data: boo
                 country_iso3 VARCHAR(3),
                 country_ison VARCHAR(3),
                 country_dialcode VARCHAR(10),
-                country_timezone VARCHAR(8),
+                country_timezone VARCHAR(10),
                 form_edit_id int(11),
                 created_on datetime,
                 created_by int(11),
@@ -58,7 +58,9 @@ def sys_country(database: str = '', create_table: bool = False, import_data: boo
                 updated_by int(11),
                 updated_by_alias varchar(50),
                 PRIMARY KEY (country_id),
-                UNIQUE (country_iso2)
+                UNIQUE (country_iso2),
+                UNIQUE (country_iso3),
+                UNIQUE (country_ison)
             )'''
             cursor.execute(sql)
 
